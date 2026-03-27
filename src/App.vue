@@ -16,11 +16,62 @@
           </label>
         </template>
       </li>
+      <li>
+        <template v-for="base in beverageStore.bases" :key="base.id">
+          <label>
+            <input
+              type="radio"
+              name="base"
+              :id="`r${base.id}`"
+              :value="base"
+              v-model="beverageStore.currentBase"
+            />
+            {{ base.name }}
+          </label>
+        </template>
+      </li>
+      <li>
+        <template v-for="syrup in beverageStore.syrups" :key="syrup.id">
+          <label>
+            <input
+              type="radio"
+              name="syrup"
+              :id="`r${syrup.id}`"
+              :value="syrup"
+              v-model="beverageStore.currentSyrup"
+            />
+            {{ syrup.name }}
+          </label>
+        </template>
+      </li>
+      <li>
+        <template v-for="creamer in beverageStore.creamers" :key="creamer.id">
+          <label>
+            <input
+              type="radio"
+              name="creamer"
+              :id="`r${creamer.id}`"
+              :value="creamer"
+              v-model="beverageStore.currentCreamer"
+            />
+            {{ creamer.name }}
+          </label>
+        </template>
+      </li>
     </ul>
-    <input type="text" placeholder="Beverage Name" />
-    <button>🍺 Make Beverage</button>
+    <input type="text" placeholder="Beverage Name" v-model="beverageStore.beverageName" />
+    <button @click="beverageStore.makeBeverage()">🍺 Make Beverage</button>
   </div>
-  <div id="beverage-container" style="margin-top: 20px"></div>
+  <div id="beverage-container">
+    <template v-for="beverage in beverageStore.savedBeverages" :key="beverage.id">
+      <input
+        type="radio"
+        name="savedBeverage"
+        :value="beverage.id"
+        @change="beverageStore.showBeverage(beverage)"
+      />
+    </template>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -42,5 +93,16 @@ html {
 }
 ul {
   list-style: none;
+  padding: 0;
+  li {
+    margin-bottom: 15px;
+  }
+}
+#beverage-container {
+  margin-top: 20px;
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
 }
 </style>
